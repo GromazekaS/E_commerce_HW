@@ -1,14 +1,11 @@
-from itertools import product
-
-
 class Product:
-    name : str
-    description : str
-    price : float
+    name: str
+    description: str
+    price: float
     quantity: int
 
-
-    def __init__(self, name, description, price, quantity):
+    def __init__(self, name: str, description: str, price: float, quantity: int) -> None:
+        """Инициализация объекта класса Product"""
         self.name = name
         self.description = description
         self.price = price
@@ -16,14 +13,14 @@ class Product:
 
 
 class Category:
-    name : str
-    description : str
-    products : list[Product]
-    product_count : int = 0
-    category_count : int = 0
+    name: str
+    description: str
+    products: list[Product]
+    product_count: int = 0
+    category_count: int = 0
 
-
-    def __init__(self, name, description, products):
+    def __init__(self, name: str, description: str, products: list[Product]) -> None:
+        """Инициализация объекта класса Category"""
         self.name = name
         self.description = description
         self.products = products
