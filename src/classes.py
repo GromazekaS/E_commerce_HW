@@ -1,5 +1,4 @@
-from tests.conftest import products_list
-from pprint import pprint
+from typing import Any
 
 
 class Product:
@@ -18,15 +17,15 @@ class Product:
         self.quantity = quantity
 
     @classmethod
-    def new_product(cls, kwargs: dict, search_list: list | None = None ):
+    def new_product(cls, kwargs: dict, search_list: list | None = None) -> Any:
         """Добавление нового продукта с проверкой наличия такого же в списке"""
         if search_list:
             for p in search_list:
-                if p.name == kwargs['name']:
+                if p.name == kwargs["name"]:
                     # Убираем из списка совпадающий товар и объединяем в один (суммируем количество)
                     p = search_list.pop(search_list.index(p))
-                    p.quantity += kwargs['quantity']
-                    p.price = max(p.price, kwargs['price'])
+                    p.quantity += kwargs["quantity"]
+                    p.price = max(p.price, kwargs["price"])
                     return p
         return Product(**kwargs)
 
@@ -38,14 +37,16 @@ class Product:
     def price(self, new_price: float) -> None:
         if new_price > 0:
             if self.__price > new_price:
-                answer = input(f"Предложенная цена {new_price} меньше цены товара {self.__price}"
-                               f"Подтвердить снижение стоимости товара {self.name}? Да (y)/ Нет (n): ")
-                if answer in ['y', 'Y']:
+                answer = input(
+                    f"Предложенная цена {new_price} меньше цены товара {self.__price}"
+                    f"Подтвердить снижение стоимости товара {self.name}? Да (y)/ Нет (n): "
+                )
+                if answer in ["y", "Y"]:
                     self.__price = new_price
-            else: self.__price = new_price
+            else:
+                self.__price = new_price
         else:
             print("Цена не должна быть нулевая или отрицательная")
-
 
 
 class Category:
@@ -63,7 +64,7 @@ class Category:
         Category.product_count += len(products)
         Category.category_count += 1
 
-    def add_product(self, product: Product):
+    def add_product(self, product: Product) -> None:
         """Добавление продукта в категорию с инкрементом количества продуктов в категории"""
         self.__products.append(product)
         Category.product_count += 1
@@ -72,7 +73,7 @@ class Category:
     def products(self) -> str:
         result = ""
         for product in self.__products:
-            result += f'{product.name}, {product.price} руб. Остаток: {product.quantity} шт.\n'
+            result += f"{product.name}, {product.price} руб. Остаток: {product.quantity} шт.\n"
         return result
 
     @property

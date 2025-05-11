@@ -1,6 +1,7 @@
 # import pytest
 from unittest.mock import patch
-from src.classes import Product, Category
+
+from src.classes import Category, Product
 
 
 def test_product(products_list: list) -> None:
@@ -33,6 +34,8 @@ def test_product_new_product_update_greater_price(products_list: list) -> None:
     assert p_new.name == "Xiaomi Redmi Note 11"
     assert p_new.description == "1024GB, Синий"
     assert p_new.price == 38000.0
+
+
 #    assert p_new.quantity == 28
 
 
@@ -45,13 +48,13 @@ def test_product_new_product_from_list(products_list: list) -> None:
     assert p1.quantity == 14
 
 
-def test_price_setter_accepts_price_increase():
+def test_price_setter_accepts_price_increase() -> None:
     product = Product("Телевизор", "4K", 100000.0, 5)
     product.price = 190000.0
     assert product.price == 190000.0
 
 
-def test_price_setter_accepts_price_reduction():
+def test_price_setter_accepts_price_reduction() -> None:
     product = Product("Телевизор", "4K", 100000.0, 5)
 
     with patch("builtins.input", return_value="y"):
@@ -60,7 +63,7 @@ def test_price_setter_accepts_price_reduction():
     assert product.price == 90000.0
 
 
-def test_price_setter_rejects_price_reduction():
+def test_price_setter_rejects_price_reduction() -> None:
     product = Product("Телевизор", "4K", 100000.0, 5)
 
     with patch("builtins.input", return_value="n"):
@@ -69,7 +72,7 @@ def test_price_setter_rejects_price_reduction():
     assert product.price == 100000.0
 
 
-def test_price_setter_negative_price():
+def test_price_setter_negative_price() -> None:
     product = Product("Телевизор", "4K", 100000.0, 5)
 
     product.price = -5000.0
@@ -84,7 +87,7 @@ def test_category(products_list: list) -> None:
         category1.description
         == "Смартфоны, как средство не только коммуникации, но и получение дополнительных функций для удобства жизни"
     )
-    assert category1.products == ''
+    assert category1.products == ""
 
 
 def test_category_count(products_list: list) -> None:
@@ -115,8 +118,10 @@ def test_category_products_info(products_list: list) -> None:
     p1 = Product(**products_list[0]["products"][0])
     p3 = Product(**products_list[0]["products"][2])
     category1 = Category(name=products_list[0]["name"], description=products_list[0]["description"], products=[p1, p3])
-    assert category1.products == ('Samsung Galaxy C23 Ultra, 180000.0 руб. Остаток: 5 шт.\n'
-                                  'Xiaomi Redmi Note 11, 31000.0 руб. Остаток: 14 шт.\n')
+    assert category1.products == (
+        "Samsung Galaxy C23 Ultra, 180000.0 руб. Остаток: 5 шт.\n"
+        "Xiaomi Redmi Note 11, 31000.0 руб. Остаток: 14 шт.\n"
+    )
 
 
 def test_category_add_product(products_list: list) -> None:

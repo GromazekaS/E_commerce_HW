@@ -1,7 +1,7 @@
 import json
-from src.logger import logger_setup
-from src.classes import Product, Category
 
+from src.classes import Category, Product
+from src.logger import logger_setup
 
 logger = logger_setup("utils")
 
@@ -38,8 +38,8 @@ def add_products(product_list: list[dict]) -> list:
     """Преобразовать список словарей-категорий в список объектов Category"""
     result = []
     for category in product_list:
-        p_list =[]
-        for product in category['products']:
+        p_list = []
+        for product in category["products"]:
             # Преобразование списка словарей-продуктов в список объектов Product
             p_list.append(Product(**product))
         result.append(Category(name=category["name"], description=category["description"], products=p_list))
