@@ -1,5 +1,5 @@
 from src.classes import Product, Category
-from src.utils import get_products_from_json
+from src.utils import get_products_from_json, add_products
 
 if __name__ == "__main__":
     product1 = Product("Samsung Galaxy S23 Ultra", "256GB, Серый цвет, 200MP камера", 180000.0, 5)
@@ -47,3 +47,9 @@ if __name__ == "__main__":
     print(Category.product_count)
 
     new_data = (get_products_from_json('data/products.json'))
+    categories = add_products(new_data)
+
+    print(categories)
+    print(Category.category_count)
+    print(Category.product_count)
+
