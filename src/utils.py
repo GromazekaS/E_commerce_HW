@@ -2,8 +2,6 @@ import json
 from src.logger import logger_setup
 from src.classes import Product, Category
 
-# from pprint import pprint
-
 
 logger = logger_setup("utils")
 
@@ -35,11 +33,14 @@ def get_products_from_json(path: str) -> list[dict]:
     logger.info("Завершение обработки файла")
     return data
 
+
 def add_products(product_list: list[dict]) -> list:
+    """Преобразовать список словарей-категорий в список объектов Category"""
     result = []
     for category in product_list:
         p_list =[]
         for product in category['products']:
+            # Преобразование списка словарей-продуктов в список объектов Product
             p_list.append(Product(**product))
         result.append(Category(name=category["name"], description=category["description"], products=p_list))
     return result

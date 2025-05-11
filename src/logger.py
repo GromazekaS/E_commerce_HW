@@ -4,6 +4,7 @@ from logging import Logger
 
 
 def logger_setup(filename: str) -> Logger:
+    """Настройка универсального логгера, форматтера и хэндлера"""
     base_dir = os.path.dirname(os.path.abspath(__file__))  # ← директория с logger_setup.py
     # print(base_dir)
     log_dir = os.path.abspath(os.path.join(base_dir, "..", "logs"))
@@ -24,5 +25,3 @@ def logger_setup(filename: str) -> Logger:
         logger.setLevel(logging.DEBUG)
 
     return logger
-
-
