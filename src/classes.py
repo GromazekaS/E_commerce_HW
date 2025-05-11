@@ -5,7 +5,7 @@ from pprint import pprint
 class Product:
     name: str
     description: str
-    price: float
+    __price: float
     quantity: int
     product_names: list[str]
     products_list: list
@@ -14,7 +14,7 @@ class Product:
         """Инициализация объекта класса Product"""
         self.name = name
         self.description = description
-        self.price = price
+        self.__price = price
         self.quantity = quantity
 
     @classmethod
@@ -27,6 +27,22 @@ class Product:
                     p.price = max(p.price, kwargs['price'])
                     return p
         return Product(**kwargs)
+
+    @property
+    def price(self) -> float:
+        return self.__price
+
+    @price.setter
+    def price(self, new_price: float) -> None:
+        if new_price > 0:
+            if self.__price > new_price:
+                answer = input(f"Предложенная цена {new_price} меньше цены товара {self.__price}"
+                               f"Подтвердить снижение стоимости товара {self.name}? Да (y)/ Нет (n): ")
+                if answer in ['y', 'Y']:
+                    self.__price = new_price
+            else: self.__price = new_price
+        else:
+            print("Цена не должна быть нулевая или отрицательная")
 
 
 
