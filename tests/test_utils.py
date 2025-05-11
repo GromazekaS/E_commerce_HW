@@ -1,9 +1,9 @@
 import json
 from typing import Any
-from unittest.mock import MagicMock, mock_open, patch
+from unittest.mock import mock_open, patch
 
 from src.classes import Category
-from src.utils import get_products_from_json, add_products
+from src.utils import add_products, get_products_from_json
 
 
 def test_get_transactions_from_valid_file(products_list: list[dict[str, Any]]) -> None:
@@ -35,9 +35,16 @@ def test_get_transactions_invalid_structure() -> None:
         assert result == []
 
 
+def test_get_transactions_wtf_error() -> None:
+    with patch("builtins.open", mock_open(read_data="{}")), patch("json.load", side_effect=TypeError("boom!")):
+        result = get_products_from_json("broken.json")
+        assert result == []  # проверяем, что функция вернула [] при исключении
+
+
 def test_add_products(products_list: list[dict]) -> None:
     Category.category_count = 0
     Category.product_count = 0
     categories = add_products(products_list)
+    assert categories[0].name == "Смартфоны"
     assert Category.category_count == 2
     assert Category.product_count == 4
