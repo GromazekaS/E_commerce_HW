@@ -18,11 +18,13 @@ class Product:
         self.quantity = quantity
 
     @classmethod
-    def new_product(cls, kwargs, search_list: list | None = None ):
+    def new_product(cls, kwargs: dict, search_list: list | None = None ):
         """Добавление нового продукта с проверкой наличия такого же в списке"""
         if search_list:
             for p in search_list:
                 if p.name == kwargs['name']:
+                    # Убираем из списка совпадающий товар и объединяем в один (суммируем количество)
+                    p = search_list.pop(search_list.index(p))
                     p.quantity += kwargs['quantity']
                     p.price = max(p.price, kwargs['price'])
                     return p
@@ -62,6 +64,7 @@ class Category:
         Category.category_count += 1
 
     def add_product(self, product: Product):
+        """Добавление продукта в категорию с инкрементом количества продуктов в категории"""
         self.__products.append(product)
         Category.product_count += 1
 

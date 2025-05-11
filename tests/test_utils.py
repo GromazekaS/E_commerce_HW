@@ -35,6 +35,13 @@ def test_get_transactions_invalid_structure() -> None:
         assert result == []
 
 
+def test_get_transactions_wtf_error() -> None:
+    with patch("builtins.open", mock_open(read_data="{}")), \
+            patch("json.load", side_effect=TypeError("boom!")):
+        result = get_products_from_json("broken.json")
+        assert result == []  # проверяем, что функция вернула [] при исключении
+
+
 def test_add_products(products_list: list[dict]) -> None:
     Category.category_count = 0
     Category.product_count = 0
