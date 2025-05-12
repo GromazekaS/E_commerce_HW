@@ -20,6 +20,9 @@ class Product:
         """Вывод в консоль информации об объекте"""
         return f"{self.name}, {self.price} руб. Остаток: {self.quantity} шт.\n"
 
+    def __add__(self, other: "Product") -> float:
+        return self.quantity * self.__price + other.quantity * other.__price
+
     @classmethod
     def new_product(cls, kwargs: dict, search_list: list | None = None) -> Any:
         """Добавление нового продукта с проверкой наличия такого же в списке"""
