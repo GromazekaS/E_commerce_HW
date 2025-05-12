@@ -16,6 +16,10 @@ class Product:
         self.__price = price
         self.quantity = quantity
 
+    def __str__(self) -> str:
+        """Вывод в консоль информации об объекте"""
+        return f"{self.name}, {self.price} руб. Остаток: {self.quantity} шт.\n"
+
     @classmethod
     def new_product(cls, kwargs: dict, search_list: list | None = None) -> Any:
         """Добавление нового продукта с проверкой наличия такого же в списке"""
@@ -63,6 +67,13 @@ class Category:
         self.__products = products
         Category.product_count += len(products)
         Category.category_count += 1
+
+    def __str__(self) -> str:
+        """Вывод в консоль информации об объекте"""
+        quantity = 0
+        for p in self.__products:
+            quantity += p.quantity
+        return f'{self.name}, количество продуктов: 200 шт.\n'
 
     def add_product(self, product: Product) -> None:
         """Добавление продукта в категорию с инкрементом количества продуктов в категории"""
