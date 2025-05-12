@@ -25,6 +25,20 @@ def test_product_new_product(products_list: list) -> None:
     assert p_new.quantity == 16
 
 
+def test_product_print(products_list: list) -> None:
+    prod = Product(**products_list[0]["products"][1])
+    assert str(prod) == "Iphone 15, 210000.0 руб. Остаток: 8 шт.\n"
+
+
+def test_product_add(products_list: list) -> None:
+    p2 = Product.new_product(products_list[0]["products"][1])
+    p3 = Product.new_product(products_list[0]["products"][2])
+#    {"name": "Iphone 15", "description": "512GB, Gray space", "price": 210000.0, "quantity": 8},
+#    {"name": "Xiaomi Redmi Note 11", "description": "1024GB, Синий", "price": 31000.0, "quantity": 14},
+# 8 * 210000 = 1_680_000, 14 * 31_000 = 434_000 : 2_114_000
+    assert p2 + p3 == 2_114_000.0
+
+
 def test_product_new_product_update_greater_price(products_list: list) -> None:
     p3 = Product.new_product(products_list[0]["products"][2])
     assert p3.price == 31000.0
@@ -34,9 +48,6 @@ def test_product_new_product_update_greater_price(products_list: list) -> None:
     assert p_new.name == "Xiaomi Redmi Note 11"
     assert p_new.description == "1024GB, Синий"
     assert p_new.price == 38000.0
-
-
-#    assert p_new.quantity == 28
 
 
 def test_product_new_product_from_list(products_list: list) -> None:
@@ -107,11 +118,17 @@ def test_product_count(products_list: list) -> None:
     assert Category.product_count == 3
 
 
+def test_category_print(products_list: list) -> None:
+    prod = Product(**products_list[0]["products"][1])
+    assert str(prod) == "Iphone 15, 210000.0 руб. Остаток: 8 шт.\n"
+
+
 def test_category_search_list(products_list: list) -> None:
     p1 = Product(**products_list[0]["products"][0])
+    p2 = Product(**products_list[0]["products"][1])
     p3 = Product(**products_list[0]["products"][2])
-    category1 = Category(name=products_list[0]["name"], description=products_list[0]["description"], products=[p1, p3])
-    assert category1.search_list == [p1, p3]
+    category1 = Category(name=products_list[0]["name"], description=products_list[0]["description"], products=[p1, p2, p3])
+    assert str(category1) == "Смартфоны, количество продуктов: 200 шт.\n"
 
 
 def test_category_products_info(products_list: list) -> None:
