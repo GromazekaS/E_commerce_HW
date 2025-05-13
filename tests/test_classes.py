@@ -128,7 +128,7 @@ def test_category_search_list(products_list: list) -> None:
     p2 = Product(**products_list[0]["products"][1])
     p3 = Product(**products_list[0]["products"][2])
     category1 = Category(name=products_list[0]["name"], description=products_list[0]["description"], products=[p1, p2, p3])
-    assert str(category1) == "Смартфоны, количество продуктов: 200 шт.\n"
+    assert str(category1) == "Смартфоны, количество продуктов: 27 шт.\n"
 
 
 def test_category_products_info(products_list: list) -> None:

@@ -76,7 +76,7 @@ class Category:
         quantity = 0
         for p in self.__products:
             quantity += p.quantity
-        return f'{self.name}, количество продуктов: 200 шт.\n'
+        return f'{self.name}, количество продуктов: {quantity} шт.\n'
 
     def add_product(self, product: Product) -> None:
         """Добавление продукта в категорию с инкрементом количества продуктов в категории"""
