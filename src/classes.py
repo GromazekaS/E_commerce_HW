@@ -23,7 +23,7 @@ class Product:
     def __add__(self, other: "Product") -> float:
         if type(self) == type(other):
             return self.quantity * self.__price + other.quantity * other.__price
-        raise TypeError
+        raise TypeError("Возникла ошибка TypeError при попытке сложения")
 
     @classmethod
     def new_product(cls, kwargs: dict, search_list: list | None = None) -> Any:
@@ -111,7 +111,7 @@ class Category:
         if isinstance(product, Product):
             self.__products.append(product)
             Category.product_count += 1
-        else: raise TypeError
+        else: raise TypeError("Возникла ошибка TypeError при попытке добавления не-продукта")
 
     @property
     def products(self) -> str:
