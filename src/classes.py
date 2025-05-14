@@ -21,7 +21,7 @@ class Product:
         return f"{self.name}, {self.price} руб. Остаток: {self.quantity} шт.\n"
 
     def __add__(self, other: "Product") -> float:
-        if type(self) == type(other):
+        if type(self) is type(other):
             return self.quantity * self.__price + other.quantity * other.__price
         raise TypeError("Возникла ошибка TypeError при попытке сложения")
 
@@ -71,6 +71,7 @@ class Smartphone(Product):
         self.memory = memory
         self.color = color
 
+
 class LawnGrass(Product):
     country: str
     germination_period: str
@@ -81,7 +82,6 @@ class LawnGrass(Product):
         self.country = country
         self.germination_period = germination_period
         self.color = color
-
 
 
 class Category:
@@ -104,14 +104,15 @@ class Category:
         quantity = 0
         for p in self.__products:
             quantity += p.quantity
-        return f'{self.name}, количество продуктов: {quantity} шт.\n'
+        return f"{self.name}, количество продуктов: {quantity} шт.\n"
 
     def add_product(self, product: Product) -> None:
         """Добавление продукта в категорию с инкрементом количества продуктов в категории"""
         if isinstance(product, Product):
             self.__products.append(product)
             Category.product_count += 1
-        else: raise TypeError("Возникла ошибка TypeError при попытке добавления не-продукта")
+        else:
+            raise TypeError("Возникла ошибка TypeError при попытке добавления не-продукта")
 
     @property
     def products(self) -> str:
