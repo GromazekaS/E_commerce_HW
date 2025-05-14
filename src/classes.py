@@ -16,6 +16,13 @@ class Product:
         self.__price = price
         self.quantity = quantity
 
+    def __str__(self) -> str:
+        """Вывод в консоль информации об объекте"""
+        return f"{self.name}, {self.price} руб. Остаток: {self.quantity} шт.\n"
+
+    def __add__(self, other: "Product") -> float:
+        return self.quantity * self.__price + other.quantity * other.__price
+
     @classmethod
     def new_product(cls, kwargs: dict, search_list: list | None = None) -> Any:
         """Добавление нового продукта с проверкой наличия такого же в списке"""
@@ -64,6 +71,13 @@ class Category:
         Category.product_count += len(products)
         Category.category_count += 1
 
+    def __str__(self) -> str:
+        """Вывод в консоль информации об объекте"""
+        quantity = 0
+        for p in self.__products:
+            quantity += p.quantity
+        return f'{self.name}, количество продуктов: {quantity} шт.\n'
+
     def add_product(self, product: Product) -> None:
         """Добавление продукта в категорию с инкрементом количества продуктов в категории"""
         self.__products.append(product)
@@ -79,3 +93,22 @@ class Category:
     @property
     def search_list(self) -> list[Product]:
         return self.__products
+
+    def get_products(self) -> list[Product]:
+        return self.__products
+
+
+class Audit:
+    def __init__(self, category: Category):
+        self.products = category.get_products()
+        self.counter = 0
+
+    def __iter__(self) -> Any:
+        return self
+
+    def __next__(self) -> Product:
+        if self.counter < len(self.products):
+            self.counter += 1
+            return self.products[self.counter - 1]
+        else:
+            raise StopIteration
