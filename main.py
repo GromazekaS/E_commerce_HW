@@ -57,6 +57,8 @@ if __name__ == '__main__':
 
     grass_sum = grass1 + grass2
     print(grass_sum)
+    print(type(smartphone1))
+    print(type(grass1))
 
     try:
         invalid_sum = smartphone1 + grass1
