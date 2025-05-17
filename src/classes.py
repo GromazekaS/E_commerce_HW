@@ -1,7 +1,27 @@
+from abc import ABC, abstractmethod
 from typing import Any
 
 
-class Product:
+class BaseProduct(ABC):
+    @abstractmethod
+    def price(self):
+        pass
+
+    @classmethod
+    @abstractmethod
+    def new_product(cls, kwargs: dict, search_list: list | None = None):
+        pass
+
+    @abstractmethod
+    def __str__(self):
+        pass
+
+    @abstractmethod
+    def __add__(self, other):
+        pass
+
+
+class Product(BaseProduct):
     name: str
     description: str
     __price: float
