@@ -46,6 +46,8 @@ class Product(BaseProduct, MixinDescribe):
 
     def __init__(self, name: str, description: str, price: float, quantity: int) -> None:
         """Инициализация объекта класса Product"""
+        if quantity < 1:
+            raise ValueError("Количество товара не может быть нулевым")
         self.name = name
         self.description = description
         self.__price = price
