@@ -2,7 +2,7 @@ from unittest.mock import patch
 
 import pytest
 
-from src.classes import Category, LawnGrass, Product, Smartphone
+from src.classes import Category, LawnGrass, Product, Smartphone, MixinDescribe
 
 
 def test_product(products_list: list) -> None:
@@ -29,6 +29,12 @@ def test_product_new_product(products_list: list) -> None:
 def test_product_print(products_list: list) -> None:
     prod = Product(**products_list[0]["products"][1])
     assert str(prod) == "Iphone 15, 210000.0 руб. Остаток: 8 шт.\n"
+
+
+def test_product_repr(products_list: list) -> None:
+    MixinDescribe.ID = 0
+    prod = Product(**products_list[0]["products"][1])
+    assert repr(prod) == "Добавлен 1-й продукт Iphone 15 в количестве 8шт. по цене: 210000.0. Это 512GB, Gray space"
 
 
 def test_product_add(products_list: list) -> None:

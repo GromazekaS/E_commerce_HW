@@ -1,7 +1,42 @@
+from abc import ABC, abstractmethod
 from typing import Any
 
 
-class Product:
+class BaseProduct(ABC):
+    @classmethod
+    @abstractmethod
+    def new_product(cls, kwargs: dict, search_list: list | None = None) -> "Product":
+        pass
+
+    @abstractmethod
+    def __str__(self) -> str:
+        pass
+
+    @abstractmethod
+    def __add__(self, other: "Product") -> float:
+        pass
+
+
+class MixinDescribe:
+    ID = 0
+
+    name: str
+    price: float
+    quantity: int
+    description: str
+
+    def __init__(self) -> None:
+        MixinDescribe.ID += 1
+        self.ID = MixinDescribe.ID
+        self.product_log()
+        super().__init__()
+
+    def product_log(self) -> None:
+        print(f"Добавлен {self.ID}-й продукт {self.name} в количестве {self.quantity}шт. по цене: {self.price}. "
+              f"Это {self.description}")
+
+
+class Product(BaseProduct, MixinDescribe):
     name: str
     description: str
     __price: float
@@ -15,6 +50,11 @@ class Product:
         self.description = description
         self.__price = price
         self.quantity = quantity
+        super().__init__()
+
+    def __repr__(self) -> str:
+        return (f"Добавлен {self.ID}-й продукт {self.name} в количестве {self.quantity}шт. по цене: {self.price}. "
+                f"Это {self.description}")
 
     def __str__(self) -> str:
         """Вывод в консоль информации об объекте"""
@@ -64,7 +104,8 @@ class Smartphone(Product):
     memory: int
     color: str
 
-    def __init__(self, name, description, price, quantity, efficiency, model, memory, color):
+    def __init__(self, name: str, description: str, price: float, quantity: int,
+                 efficiency: float, model: str, memory: int, color: str) -> None:
         super().__init__(name, description, price, quantity)
         self.efficiency = efficiency
         self.model = model
@@ -77,7 +118,8 @@ class LawnGrass(Product):
     germination_period: str
     color: str
 
-    def __init__(self, name, description, price, quantity, country, germination_period, color):
+    def __init__(self, name: str, description: str, price: float, quantity: int,
+                 country: str, germination_period: str, color: str) -> None:
         super().__init__(name, description, price, quantity)
         self.country = country
         self.germination_period = germination_period
@@ -121,25 +163,25 @@ class Category:
             result += f"{product.name}, {product.price} руб. Остаток: {product.quantity} шт.\n"
         return result
 
-    @property
-    def search_list(self) -> list[Product]:
-        return self.__products
-
-    def get_products(self) -> list[Product]:
-        return self.__products
-
-
-class Audit:
-    def __init__(self, category: Category):
-        self.products = category.get_products()
-        self.counter = 0
-
-    def __iter__(self) -> Any:
-        return self
-
-    def __next__(self) -> Product:
-        if self.counter < len(self.products):
-            self.counter += 1
-            return self.products[self.counter - 1]
-        else:
-            raise StopIteration
+# Раcкомментировать для использования в классе Audit
+#    @property
+#    def search_list(self) -> list[Product]:
+#        return self.__products
+#
+#    def get_products(self) -> list[Product]:
+#        return self.__products
+#
+# class Audit:
+#    def __init__(self, category: Category):
+#        self.products = category.get_products()
+#        self.counter = 0
+#
+#    def __iter__(self) -> Any:
+#        return self
+#
+#    def __next__(self) -> Product:
+#        if self.counter < len(self.products):
+#            self.counter += 1
+#            return self.products[self.counter - 1]
+#        else:
+#            raise StopIteration
