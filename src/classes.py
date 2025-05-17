@@ -3,21 +3,17 @@ from typing import Any
 
 
 class BaseProduct(ABC):
-    @abstractmethod
-    def price(self):
-        pass
-
     @classmethod
     @abstractmethod
-    def new_product(cls, kwargs: dict, search_list: list | None = None):
+    def new_product(cls, kwargs: dict, search_list: list | None = None) -> "Product":
         pass
 
     @abstractmethod
-    def __str__(self):
+    def __str__(self) -> str:
         pass
 
     @abstractmethod
-    def __add__(self, other):
+    def __add__(self, other: "Product") -> float:
         pass
 
 
@@ -29,13 +25,13 @@ class MixinDescribe:
     quantity: int
     description: str
 
-    def __init__(self):
+    def __init__(self) -> None:
         MixinDescribe.ID += 1
         self.ID = MixinDescribe.ID
         self.product_log()
         super().__init__()
 
-    def product_log(self):
+    def product_log(self) -> None:
         print(f"Добавлен {self.ID}-й продукт {self.name} в количестве {self.quantity}шт. по цене: {self.price}. "
               f"Это {self.description}")
 
@@ -56,9 +52,9 @@ class Product(BaseProduct, MixinDescribe):
         self.quantity = quantity
         super().__init__()
 
-    def __repr__(self):
+    def __repr__(self) -> str:
         return (f"Добавлен {self.ID}-й продукт {self.name} в количестве {self.quantity}шт. по цене: {self.price}. "
-              f"Это {self.description}")
+                f"Это {self.description}")
 
     def __str__(self) -> str:
         """Вывод в консоль информации об объекте"""
@@ -108,7 +104,8 @@ class Smartphone(Product):
     memory: int
     color: str
 
-    def __init__(self, name, description, price, quantity, efficiency, model, memory, color):
+    def __init__(self, name: str, description: str, price: float, quantity: int,
+                 efficiency: float, model: str, memory: int, color: str) -> None:
         super().__init__(name, description, price, quantity)
         self.efficiency = efficiency
         self.model = model
@@ -121,7 +118,8 @@ class LawnGrass(Product):
     germination_period: str
     color: str
 
-    def __init__(self, name, description, price, quantity, country, germination_period, color):
+    def __init__(self, name: str, description: str, price: float, quantity: int,
+                 country: str, germination_period: str, color: str) -> None:
         super().__init__(name, description, price, quantity)
         self.country = country
         self.germination_period = germination_period
