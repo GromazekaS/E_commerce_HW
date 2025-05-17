@@ -24,6 +24,11 @@ class BaseProduct(ABC):
 class MixinDescribe:
     ID = 0
 
+    name: str
+    price: float
+    quantity: int
+    description: str
+
     def __init__(self):
         MixinDescribe.ID += 1
         self.ID = MixinDescribe.ID
@@ -160,25 +165,25 @@ class Category:
             result += f"{product.name}, {product.price} руб. Остаток: {product.quantity} шт.\n"
         return result
 
-    @property
-    def search_list(self) -> list[Product]:
-        return self.__products
-
-    def get_products(self) -> list[Product]:
-        return self.__products
-
-
-class Audit:
-    def __init__(self, category: Category):
-        self.products = category.get_products()
-        self.counter = 0
-
-    def __iter__(self) -> Any:
-        return self
-
-    def __next__(self) -> Product:
-        if self.counter < len(self.products):
-            self.counter += 1
-            return self.products[self.counter - 1]
-        else:
-            raise StopIteration
+# Раcкомментировать для использования в классе Audit
+#    @property
+#    def search_list(self) -> list[Product]:
+#        return self.__products
+#
+#    def get_products(self) -> list[Product]:
+#        return self.__products
+#
+# class Audit:
+#    def __init__(self, category: Category):
+#        self.products = category.get_products()
+#        self.counter = 0
+#
+#    def __iter__(self) -> Any:
+#        return self
+#
+#    def __next__(self) -> Product:
+#        if self.counter < len(self.products):
+#            self.counter += 1
+#            return self.products[self.counter - 1]
+#        else:
+#            raise StopIteration
