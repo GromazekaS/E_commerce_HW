@@ -10,9 +10,12 @@
 
 16.1 done
 
-16.2
+16.2 done
 
 ### Функциональность:
 #### HW14.1:
-1. Описаны классы Product, Category
+1. Описаны:
+- абстрактный базовый класс BaseProduct;
+- класс MixinDescribe
+- классы Product, Lawngrass, Smartphone, Category
 2. Написаны тесты для проверки корректности инициализирования объектов классов Product и Category
