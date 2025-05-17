@@ -21,7 +21,21 @@ class BaseProduct(ABC):
         pass
 
 
-class Product(BaseProduct):
+class MixinDescribe:
+    ID = 0
+
+    def __init__(self):
+        MixinDescribe.ID += 1
+        self.ID = MixinDescribe.ID
+        self.product_log()
+        super().__init__()
+
+    def product_log(self):
+        print(f"Добавлен {self.ID}-й продукт {self.name} в количестве {self.quantity}шт. по цене: {self.price}. "
+              f"Это {self.description}")
+
+
+class Product(BaseProduct, MixinDescribe):
     name: str
     description: str
     __price: float
@@ -35,6 +49,11 @@ class Product(BaseProduct):
         self.description = description
         self.__price = price
         self.quantity = quantity
+        super().__init__()
+
+    def __repr__(self):
+        return (f"Добавлен {self.ID}-й продукт {self.name} в количестве {self.quantity}шт. по цене: {self.price}. "
+              f"Это {self.description}")
 
     def __str__(self) -> str:
         """Вывод в консоль информации об объекте"""
