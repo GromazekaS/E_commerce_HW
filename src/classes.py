@@ -166,6 +166,7 @@ class Category:
         for prod in self.__products:
             q += prod.quantity
             all_sum += prod.price*prod.quantity
+            print(all_sum, q)
 #        return round(all_sum/q, 1)
         try:
             return round(all_sum/q, 1)

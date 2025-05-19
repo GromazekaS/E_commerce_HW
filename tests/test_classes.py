@@ -78,6 +78,12 @@ def test_product_new_product_from_list(products_list: list) -> None:
     assert p1.quantity == 14
 
 
+def test_product_new_product_zero_quantity(products_list: list) -> None:
+    with pytest.raises(ValueError) as exc_info:
+        Product.new_product({"name": "Xiaomi Redmi Note 11", "description": "1024GB, Синий", "price": 31000.0, "quantity": 0})
+        assert str(exc_info.value) == "Количество товара не может быть нулевым"
+
+
 def test_price_setter_accepts_price_increase() -> None:
     product = Product("Телевизор", "4K", 100000.0, 5)
     product.price = 190000.0
@@ -160,6 +166,20 @@ def test_category_products_info(products_list: list) -> None:
         "Samsung Galaxy C23 Ultra, 180000.0 руб. Остаток: 5 шт.\n"
         "Xiaomi Redmi Note 11, 31000.0 руб. Остаток: 14 шт.\n"
     )
+
+
+def test_category_middle_price(products_list: list) -> None:
+    p2 = Product(**products_list[0]["products"][1])
+    p3 = Product(**products_list[0]["products"][2])
+    # {"name": "Iphone 15", "description": "512GB, Gray space", "price": 210000.0, "quantity": 8},
+    # {"name": "Xiaomi Redmi Note 11", "description": "1024GB, Синий", "price": 31000.0, "quantity": 14},
+    category1 = Category(name=products_list[0]["name"], description=products_list[0]["description"], products=[p2, p3])
+    assert category1.middle_price() == 96090.9
+
+
+def test_category_middle_price_zero_division(products_list: list) -> None:
+    category_zd = Category(name=products_list[0]["name"], description=products_list[0]["description"], products=[])
+    assert category_zd.middle_price() == 0
 
 
 def test_category_add_product(products_list: list) -> None:
