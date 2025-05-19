@@ -159,14 +159,19 @@ class Category:
             raise TypeError("Возникла ошибка TypeError при попытке добавления не-продукта")
 
     def middle_price(self) -> float:
-        if len(self.products) == 0: return 0
+        # Через try эта конструкция выглядит коряво
+        # if len(self.products) == 0: return 0
         q = 0
         all_sum = 0
         for prod in self.__products:
             q += prod.quantity
             all_sum += prod.price*prod.quantity
-        return round(all_sum/q, 1)
-
+#        return round(all_sum/q, 1)
+        try:
+            return round(all_sum/q, 1)
+        except ZeroDivisionError as e:
+            print(f"Возникла ошибка: {e}")
+            return 0
 
     @property
     def products(self) -> str:
